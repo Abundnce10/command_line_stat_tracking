@@ -1,4 +1,8 @@
-This is a project I'm using to get more familiar with classes in Ruby and how objects relate and interract with one another
+This is a project I'm using to get more familiar with classes in Ruby and how objects relate and interract with one another.
+
+I only execute commands from the command line and no data is stored once I exit the interactive Ruby Environment.
+
+Hopefully, when I get a better understanding and a working prototype I'll move this project over into a web browser.  Instead of using text to describe objects I'll use images.  But I don't want to get ahead of myself...
 
 I currently use this Player script (player.rb) as follows:
 $ irb
