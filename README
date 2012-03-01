@@ -1,1 +1,11 @@
 This is a project I'm using to get more familiar with classes in Ruby and how objects relate and interract with one another
+
+I currently use this Player script (player.rb) as follows:
+$ irb
+$ require './player'
+$ x = Player.new
+$ x.ftmiss
+$ x.ftmake
+$ x.block
+$ x.threemake
+$ x.display #=> prints out stats for player x
