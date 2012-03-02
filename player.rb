@@ -30,6 +30,20 @@ class Game
     puts "----------------------------------"
     puts "\n\n"
   end
+
+  def prompt
+    print "\n>>> "
+  end
+
+  def exit
+    puts "Are you sure? (Y/N)"
+    prompt()
+    action = gets.chomp()
+    if action.upcase == 'Y'
+      Process.exit(1)
+    end
+  end
+
 end
 
 class Player
