@@ -10,8 +10,9 @@ class Game
     @team = []
   end
 
-  def add_player
-    @player = Player.new
+  def add_player(name, num)
+    #Create Player#object and push to @team array
+    @player = Player.new(name, num).tap{|player| @team.push(player)}  
   end
 
   def add_to_team(player)
@@ -20,6 +21,8 @@ class Game
 
   def display
     puts "\n\n"
+    puts @team.class
+    puts @team.inspect
     puts "----------------------------------"
     @team.each do |player|
       puts "#{player.number}: #{player.name}"
@@ -33,8 +36,8 @@ class Player
   
   attr_accessor :name, :age, :height, :weight, :position, :number
 
-  def initialize()
-    @name, @age, @height, @weight, @position, @number = nil, 0, 0, 0, nil, 0
+  def initialize(name=nil, numb=nil)
+    @name, @age, @height, @weight, @position, @number = name, 0, 0, 0, nil, numb
     #shot variables initialized
     @points, @ftAttempted, @ftMade, @twoAttempted, 
         @twoMade, @threeAttempted, @threeMade = 0,0,0,0,0,0,0,0,0
