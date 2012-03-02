@@ -9,26 +9,26 @@ class Game
   end
 
   def game_details
-    puts "\nAdd player? (Y/N)"
-    prompt
-    action = gets.chomp
-    if action.upcase == 'Y'
-      puts "Player Name:"
+    loop do
+      puts "\nAdd a Player to the Roster? (Y/N)"
       prompt
-      name = gets.chomp
-      puts "Player Number:"
-      prompt
-      number = gets.chomp
-      # Store details in a new Player#object
-      # How do I access this object from the command line??
-      add_player(name, number)
-    elsif action.upcase == 'N'
-      return
-    else
-      puts "Try that again."
-      game_details
+      action = gets.chomp
+      if action.upcase == 'Y'
+        puts "Player Name:"
+        prompt
+        name = gets.chomp
+        puts "Player Number:"
+        prompt
+        number = gets.chomp
+        # Store details in a new Player#object
+        # How do I access this object from the command line??
+        add_player(name, number)
+      elsif action.upcase == 'N'
+        return
+      else
+        puts "Try that again."
+      end
     end
-    game_details  
   end
 
   def add_player(name, num)
@@ -42,8 +42,6 @@ class Game
 
   def display
     puts "\n\n"
-    puts @team.class
-    puts @team.inspect
     puts "----------------------------------"
     @team.each do |player|
       puts "#{player.number}: #{player.name}"
@@ -66,6 +64,7 @@ class Game
   end
 
 end
+
 
 class Player
   
