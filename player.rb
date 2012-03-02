@@ -1,13 +1,34 @@
 class Game
 
-  #NEED HELP HERE
-  #How do I make it so when I add points to a player object (ie player#twomake)
-  #it also adds points to the Game @@points total
-  @@points = 0
+  @points = 0
 
   def initialize
     super
     @team = []
+    game_details()
+  end
+
+  def game_details
+    puts "\nAdd player? (Y/N)"
+    prompt
+    action = gets.chomp
+    if action.upcase == 'Y'
+      puts "Player Name:"
+      prompt
+      name = gets.chomp
+      puts "Player Number:"
+      prompt
+      number = gets.chomp
+      # Store details in a new Player#object
+      # How do I access this object from the command line??
+      add_player(name, number)
+    elsif action.upcase == 'N'
+      return
+    else
+      puts "Try that again."
+      game_details
+    end
+    game_details  
   end
 
   def add_player(name, num)
