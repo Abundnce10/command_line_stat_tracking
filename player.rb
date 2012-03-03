@@ -1,20 +1,24 @@
 class Game
 
-  attr_reader :points, :rebounds, :assists, :steals, :blocks, :turnovers
+  attr_reader :points, :rebounds, :assists, :steals, :blocks, :turnovers, :teamname
 
-  def initialize
+  def initialize(teamname=nil)
     super
+    @teamname = teamname
     @team = []
     @points, @rebounds, @assists, @steals, 
         @blocks, @turnovers = 0, 0, 0, 0, 0, 0
   end
 
   def team
-    seperate
+    puts "\n\n\t\t#{@teamname}"
+    dashes
     @team.each do |player|
-      puts "\n#{player.number}: #{player.name}\n"
+      puts "\n\t\t#{player.number}: #{player.name}\n"
     end  
-    seperate
+    puts "\n"
+    dashes
+    puts "\n"
   end
 
   def add_player(name, num)
@@ -86,17 +90,18 @@ class Game
     @turnovers = update_turnovers
   end
 
-  def seperate
-    puts "----------------------------------"
+  def dashes
+    puts "\t\t----------------------------------"
   end
 
-  def display
+  def player_info
     puts "\n\n"
-    seperate
+    puts "Number: Player Name"
+    dashes
     @team.each do |player|
-      puts "#{player.number}: #{player.name}"
+      puts "\##{player.number}: #{player.name}"
     end
-    seperate
+    dashes
     puts "\n\n"
   end
 
@@ -225,42 +230,42 @@ class Player
   end
 
   def steal_info
-    puts "\nSTEAL STATISTICS"
-    puts "----------------------------"
-    puts "Total Steals:           #{@steals}"
+    puts "\n\t\tSTEAL STATISTICS"
+    dashes
+    puts "\t\tTotal Steals:           #{@steals}"
     puts "\n"
   end
 
   def block_info
-    puts "\nBLOCK STATISTICS"
-    puts "----------------------------"
-    puts "Total Blocks:           #{@blocks}"
+    puts "\n\t\tBLOCK STATISTICS"
+    dashes
+    puts "\t\tTotal Blocks:           #{@blocks}"
     puts "\n"
   end
 
   def turn_info
-    puts "\nTURNOVER STATISTICS"
-    puts "----------------------------"
-    puts "Turnovers:              #{@turnovers}"
+    puts "\n\t\tTURNOVER STATISTICS"
+    dashes
+    puts "\t\tTurnovers:              #{@turnovers}"
     puts "\n"
   end
 
   def asst_info
     asst_turn = percent(@assists, @turnovers)
-    puts "\nASSIST STATISTICS"
-    puts "----------------------------"
-    puts "Total Assists:          #{@assists}"
-    puts "Assist/Turnover:        #{asst_turn}"
+    puts "\n\t\tASSIST STATISTICS"
+    dashes
+    puts "\t\tTotal Assists:          #{@assists}"
+    puts "\t\tAssist/Turnover:        #{asst_turn}"
     puts "\n"
   end
 
   def reb_info
     tot_rebs = @defRebs + @offRebs
-    puts "\nREBOUND STATISTICS"
-    puts "----------------------------"
-    puts "Offensive Rebs:         #{@offRebs}"
-    puts "Defensive Rebs:         #{@defRebs}"
-    puts "Total Rebs:             #{tot_rebs}"
+    puts "\n\t\tREBOUND STATISTICS"
+    dashes
+    puts "\t\tOffensive Rebs:         #{@offRebs}"
+    puts "\t\tDefensive Rebs:         #{@defRebs}"
+    puts "\t\tTotal Rebs:             #{tot_rebs}"
     puts "\n"
   end
 
@@ -271,43 +276,44 @@ class Player
     two_perct = percent(@twoMade, @twoAtt)
     three_perct = percent(@threeMade, @threeAtt)
     fg_perct = percent(fg_made, fg_att)
-    puts "\nSHOOTING STATISTICS"
-    puts "----------------------------"
-    puts "Points:                 #{@points}"
-    puts "----------------------------"
-    puts "FTMade:                 #{@ftMade}"
-    puts "FTAttempted:            #{@ftAtt}"
-    puts "FT%:                    #{ft_perct}"
-    puts "----------------------------"
-    puts "2PMade:                 #{@twoMade}"
-    puts "2PAttempted:            #{@twoAtt}"
-    puts "2P%:                    #{two_perct}"
-    puts "----------------------------"
-    puts "3PMade:                 #{@threeMade}"
-    puts "3PAttempted:            #{@threeAtt}"
-    puts "3P%:                    #{three_perct}"
-    puts "----------------------------"
-    puts "FGMade:                 #{fg_made}"
-    puts "FGAttempted:            #{fg_att}"
-    puts "FG%:                    #{fg_perct}" 
+    puts "\n\t\tSHOOTING STATISTICS"
+    dashes
+    puts "\t\tPoints:                 #{@points}"
+    dashes
+    puts "\t\tFTMade:                 #{@ftMade}"
+    puts "\t\tFTAttempted:            #{@ftAtt}"
+    puts "\t\tFT%:                    #{ft_perct}"
+    dashes
+    puts "\t\t2PMade:                 #{@twoMade}"
+    puts "\t\t2PAttempted:            #{@twoAtt}"
+    puts "\t\t2P%:                    #{two_perct}"
+    dashes
+    puts "\t\t3PMade:                 #{@threeMade}"
+    puts "\t\t3PAttempted:            #{@threeAtt}"
+    puts "\t\t3P%:                    #{three_perct}"
+    dashes
+    puts "\t\tFGMade:                 #{fg_made}"
+    puts "\t\tFGAttempted:            #{fg_att}"
+    puts "\t\tFG%:                    #{fg_perct}" 
     puts "\n"
   end
 
   def player_info
     puts "\n\n\n"
-    puts "PLAYER INFO"
-    puts "----------------------------"
-    puts "Name:                  #{@name}"
-    puts "Number:                #{@number}"
-    puts "Age:                   #{@age} years old"
-    puts "Height:                #{@height} inches"
-    puts "Weight:                #{@weight} pounds"
-    puts "Position:              #{@position}"
+    puts "\t\tPLAYER INFO"
+    dashes
+    puts "\t\tName:                  #{@name}"
+    puts "\t\tNumber:                #{@number}"
+    puts "\t\tAge:                   #{@age} years old"
+    puts "\t\tHeight:                #{@height} inches"
+    puts "\t\tWeight:                #{@weight} pounds"
+    puts "\t\tPosition:              #{@position}"
     puts "\n" 
   end
 
   def display
-    player_info
+    puts "\n\n\t\t\##{@number} #{@name}"
+    dashes
     shot_info
     reb_info
     asst_info
@@ -315,6 +321,10 @@ class Player
     block_info
     turn_info
     puts "\n\n"
+  end
+
+  def dashes
+    puts "\t\t----------------------------"
   end
 
   def inspect
