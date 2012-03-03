@@ -110,8 +110,8 @@ class Player
   def initialize(name=nil, numb=nil)
     @name, @age, @height, @weight, @position, @number = name, 0, 0, 0, nil, numb
     #shot variables initialized
-    @points, @ftAttempted, @ftMade, @twoAttempted, 
-        @twoMade, @threeAttempted, @threeMade = 0,0,0,0,0,0,0,0,0
+    @points, @ftAtt, @ftMade, @twoAtt, 
+        @twoMade, @threeAtt, @threeMade = 0,0,0,0,0,0,0,0,0
     #rebound variables
     @offRebs, @defRebs = 0,0
     #assist variable
@@ -120,6 +120,12 @@ class Player
     @turnovers = 0
     #block variable
     @blocks = 0
+    #steal variable
+    @steals = 0
+  end
+
+  def steal
+    @steals += 1
   end
 
   def block
@@ -143,48 +149,55 @@ class Player
   end
 
   def ftmake
-    @ftAttempted += 1
+    @ftAtt += 1
     @ftMade += 1
     @points += 1
   end
 
   def ftmiss
-    @ftAttempted += 1
+    @ftAtt += 1
   end
 
   def twomake
-    @twoAttempted += 1
+    @twoAtt += 1
     @twoMade += 1
     @points += 2
   end
 
   def twomiss
-    @twoAttempted += 1
+    @twoAtt += 1
   end
 
   def threemake
-    @threeAttempted += 1
+    @threeAtt += 1
     @threeMade += 1
     @points += 3
   end
 
   def threemiss
-    @threeAttempted += 1
+    @threeAtt += 1
   end
 
   def percent(make, att)
     return (make.to_f / att).round(2)
   end
 
+  def steal_info
+    puts "\nSTEAL STATISTICS"
+    puts "----------------------------"
+    puts "Total Steals:           #{@steals}"
+    puts "\n"
+  end
+
   def block_info
-    puts "BLOCK STATISTICS"
+    puts "\nBLOCK STATISTICS"
     puts "----------------------------"
     puts "Total Blocks:           #{@blocks}"
     puts "\n"
   end
 
   def turn_info
-    puts "TURNOVER STATISTICS"
+    puts "\nTURNOVER STATISTICS"
     puts "----------------------------"
     puts "Turnovers:              #{@turnovers}"
     puts "\n"
@@ -192,7 +205,7 @@ class Player
 
   def asst_info
     asst_turn = percent(@assists, @turnovers)
-    puts "ASSIST STATISTICS"
+    puts "\nASSIST STATISTICS"
     puts "----------------------------"
     puts "Total Assists:          #{@assists}"
     puts "Assist/Turnover:        #{asst_turn}"
@@ -201,35 +214,35 @@ class Player
 
   def reb_info
     tot_rebs = @defRebs + @offRebs
-    puts "REBOUND STATISTICS"
+    puts "\nREBOUND STATISTICS"
     puts "----------------------------"
-    puts "Offensive Rebs:         #{@offReb}"
-    puts "Defensive Rebs:         #{@defReb}"
+    puts "Offensive Rebs:         #{@offRebs}"
+    puts "Defensive Rebs:         #{@defRebs}"
     puts "Total Rebs:             #{tot_rebs}"
     puts "\n"
   end
 
   def shot_info 
     fg_made = @twoMade + @threeMade
-    fg_att =  @twoAttempted + @threeAttempted
-    ft_perct = percent(@ftMade, @ftAttempted)
-    two_perct = percent(@twoMade, @twoAttempted)
-    three_perct = percent(@threeMade, @threeAttempted)
+    fg_att =  @twoAtt + @threeAtt
+    ft_perct = percent(@ftMade, @ftAtt)
+    two_perct = percent(@twoMade, @twoAtt)
+    three_perct = percent(@threeMade, @threeAtt)
     fg_perct = percent(fg_made, fg_att)
     puts "\nSHOOTING STATISTICS"
     puts "----------------------------"
     puts "Points:                 #{@points}"
     puts "----------------------------"
     puts "FTMade:                 #{@ftMade}"
-    puts "FTAttempted:            #{@ftAttempted}"
+    puts "FTAttempted:            #{@ftAtt}"
     puts "FT%:                    #{ft_perct}"
     puts "----------------------------"
     puts "2PMade:                 #{@twoMade}"
-    puts "2PAttempted:            #{@twoAttempted}"
+    puts "2PAttempted:            #{@twoAtt}"
     puts "2P%:                    #{two_perct}"
     puts "----------------------------"
     puts "3PMade:                 #{@threeMade}"
-    puts "3PAttempted:            #{@threeAttempted}"
+    puts "3PAttempted:            #{@threeAtt}"
     puts "3P%:                    #{three_perct}"
     puts "----------------------------"
     puts "FGMade:                 #{fg_made}"
@@ -256,8 +269,9 @@ class Player
     shot_info
     reb_info
     asst_info
-    turn_info
+    steal_info
     block_info
+    turn_info
     puts "\n\n"
   end
 
