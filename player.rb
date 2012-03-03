@@ -1,13 +1,16 @@
 class Game
 
-  attr_reader :points, :rebounds, :assists, :steals, :blocks, :turnovers, :teamname
+  attr_reader :points, :rebounds, :assists, :steals, :blocks, :turnovers, :teamname,
+              :twoAtts, :twoMades, :threeAtts, :threeMades, :ftAtts, :ftMades,
+              :offRebs, :defRebs
 
   def initialize(teamname=nil)
     super
     @teamname = teamname
     @team = []
-    @points, @rebounds, @assists, @steals, 
-        @blocks, @turnovers = 0, 0, 0, 0, 0, 0
+    @points, @rebounds, @assists, @steals, @blocks, @turnovers,
+        @twoAtts, @twoMades, @threeAtts, @threeMades, @ftAtts,
+        @ftMades, @offRebs, @defRebs  = 0,0,0,0,0,0,0,0,0,0,0,0,0
   end
 
   def add_player(name, num)
@@ -27,16 +30,6 @@ class Game
 
   def points
     @points = update_points()
-  end
-
-  def update_rebounds
-    sum = 0
-    @team.each{|player| sum += (player.offRebs + player.defRebs)}
-    return sum
-  end
-
-  def rebounds
-    @rebounds = update_rebounds()
   end
 
   def update_assists
@@ -79,6 +72,93 @@ class Game
     @turnovers = update_turnovers
   end
 
+  def update_twoAtts
+    sum = 0
+    @team.each{|player| sum += player.twoAtt}
+    return sum
+  end
+
+  def twoAtts
+    @twoAtts = update_twoAtts
+  end
+
+  def update_twoMades
+    sum = 0
+    @team.each{|player| sum += player.twoMade}
+    return sum
+  end
+
+  def twoMades
+    @twoMades = update_twoMades
+  end
+
+  def update_threeAtts
+    sum = 0
+    @team.each{|player| sum += player.threeAtt}
+    return sum
+  end
+
+  def threeAtts
+    @threeAtts = update_threeAtts
+  end
+
+  def update_threeMades
+    sum = 0
+    @team.each{|player| sum += player.threeMade}
+    return sum
+  end
+
+  def threeMades
+    @threeMades = update_threeMades
+  end
+
+
+  def update_ftAtts
+    sum = 0
+    @team.each{|player| sum += player.ftAtt}
+    return sum
+  end
+
+  def ftAtts
+    @ftAtts = update_ftAtts
+  end
+
+  def update_ftMades
+    sum = 0
+    @team.each{|player| sum += player.ftMade}
+    return sum
+  end
+
+  def ftMades
+    @ftMades = update_ftMades
+  end
+
+  def update_offRebs
+    sum = 0
+    @team.each{|player| sum += player.offRebs}
+    return sum
+  end
+
+  def offRebs
+    @offRebs = update_offRebs
+  end
+
+  def update_defRebs
+    sum = 0
+    @team.each{|player| sum += player.defRebs}
+    return sum
+  end
+
+  def defRebs
+    @defRebs = update_defRebs
+  end
+
+  def rebounds
+    @rebounds = update_offRebs + update_defRebs
+  end
+
+
+
   def update
     points
     rebounds
@@ -86,6 +166,15 @@ class Game
     steals
     blocks
     turnovers
+    twoAtts
+    twoMades
+    threeAtts
+    threeMades
+    ftAtts
+    ftMades
+    defRebs
+    offRebs
+    rebounds
   end
 
   def roster
@@ -105,28 +194,43 @@ class Game
     update
     puts "\n\n\t\t#{@teamname}"
     dashes
-    puts "\t\tSCORE:              #{@points}"
+    puts "\n\t\tSCORE:                 #{@points}"
     dashes 
-    puts "\t\tSHOOTING"
+    puts "\n\t\tSHOOTING"
+    puts "\n\t\tTwo Pointers:          #{@twoMades} / #{@twoAtts}"
+    puts "\t\tThree Pointers:        #{@threeMades} / #{@threeAtts}"
+    puts "\t\tFree Throws:           #{@ftMades} / #{@ftAtts}"
     dashes
-    puts "\t\tFIELD GOALS:        xx / xx"
-    puts "\t\tTHREE POINTERS:     xx / xx"
-    puts "\t\tFREE THROWS:        xx / xx"
     puts "\n\t\tREBOUNDING"
+    puts "\n\t\tOffensive              #{@offRebs}"
+    puts "\t\tDefensive:             #{@defRebs}"
     dashes
-    puts "\t\tOffensive:          xx"
-    puts "\t\tDefensive:          xx"
-    puts "\n\t\tASSISTS:            #{@assists}"
-    puts "\n\t\tSTEALS:             #{@steals}"
-    puts "\n\t\tBLOCKS:             #{@blocks}"
-    puts "\n\t\tTURNOVERS:          #{@turnovers}"
+    puts "\n\t\tASSISTS:               #{@assists}"
     dashes
+    puts "\n\t\tSTEALS:                #{@steals}"
+    dashes
+    puts "\n\t\tBLOCKS:                #{@blocks}"
+    dashes
+    puts "\n\t\tTURNOVERS:             #{@turnovers}"
+    dashes
+    puts "\n\n"
+  end
+
+  def shot_info
+    update
+    puts "\n\n\t\tSHOOTING"
+    dashes 
+    puts "\n\t\tTWO POINTERS:          #{@twoMades} / #{@twoAtts}"
+    puts "\t\tTHREE POINTERS:        #{@threeMades} / #{@threeAtts}"
+    puts "\t\tFREE THROWS:           #{@ftMades} / #{@ftAtts}"
+    dashes
+    puts "\n\t\tSCORE:                 #{@points}"
     puts "\n\n"
   end
 
 
   def dashes
-    puts "\t\t----------------------------------"
+    puts "\n\t\t------------------------------------"
   end
 
   def prompt
@@ -146,37 +250,14 @@ class Game
     puts "-----"
   end
 
-=begin
-  def game_details
-    loop do
-      puts "\nAdd a Player to the Roster? (Y/N)"
-      prompt
-      action = gets.chomp
-      if action.upcase == 'Y'
-        puts "Player Name:"
-        prompt
-        name = gets.chomp
-        puts "Player Number:"
-        prompt
-        number = gets.chomp
-        # Store details in a new Player#object
-        # How do I access this object from the command line??
-        add_player(name, number)
-      elsif action.upcase == 'N'
-        return
-      else
-        puts "Try that again."
-      end
-    end
-  end
-=end
 end
 
 
 class Player
   
   attr_accessor :name, :age, :height, :weight, :position, :number, :points, 
-                :offRebs, :defRebs, :assists, :turnovers, :blocks, :steals
+                :offRebs, :defRebs, :assists, :turnovers, :blocks, :steals,
+                :ftAtt, :ftMade, :twoAtt, :twoMade, :threeAtt, :threeMade
 
   def initialize(name=nil, numb=nil)
     @name, @age, @height, @weight, @position, @number = name, 0, 0, 0, nil, numb
