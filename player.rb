@@ -46,7 +46,7 @@ class Game
     @rebounds = update_rebounds()
   end
 
-    def update_assists
+  def update_assists
     sum = 0
     @team.each{|player| sum += player.assists}
     return sum
@@ -56,7 +56,7 @@ class Game
     @assists = update_assists
   end
 
-    def update_steals
+  def update_steals
     sum = 0
     @team.each{|player| sum += player.steals}
     return sum
