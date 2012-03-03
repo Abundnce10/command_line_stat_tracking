@@ -1,11 +1,12 @@
 class Game
 
-  attr_reader :points, :rebounds
+  attr_reader :points, :rebounds, :assists, :steals, :blocks, :turnovers
 
   def initialize
     super
     @team = []
-    @points, @rebounds = 0, 0
+    @points, @rebounds, @assists, @steals, 
+        @blocks, @turnovers = 0, 0, 0, 0, 0, 0
   end
 
   def team
@@ -43,6 +44,46 @@ class Game
 
   def rebounds
     @rebounds = update_rebounds()
+  end
+
+    def update_assists
+    sum = 0
+    @team.each{|player| sum += player.assists}
+    return sum
+  end
+
+  def assists
+    @assists = update_assists
+  end
+
+    def update_steals
+    sum = 0
+    @team.each{|player| sum += player.steals}
+    return sum
+  end
+
+  def steals
+    @steals = update_steals
+  end
+
+  def update_blocks
+    sum = 0
+    @team.each{|player| sum += player.blocks}
+    return sum
+  end
+
+  def blocks
+    @blocks = update_blocks
+  end
+
+  def update_turnovers
+    sum = 0
+    @team.each{|player| sum += player.turnovers}
+    return sum
+  end
+
+  def turnovers
+    @turnovers = update_turnovers
   end
 
   def seperate
@@ -105,7 +146,8 @@ end
 
 class Player
   
-  attr_accessor :name, :age, :height, :weight, :position, :number, :points, :offRebs, :defRebs
+  attr_accessor :name, :age, :height, :weight, :position, :number, :points, 
+                :offRebs, :defRebs, :assists, :turnovers, :blocks, :steals
 
   def initialize(name=nil, numb=nil)
     @name, @age, @height, @weight, @position, @number = name, 0, 0, 0, nil, numb
