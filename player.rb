@@ -1,13 +1,82 @@
 class Game
 
-  @points = 0
+  attr_reader :points, :rebounds
 
   def initialize
     super
     @team = []
-    game_details()
+    @points, @rebounds = 0, 0
   end
 
+  def team
+    seperate
+    @team.each do |player|
+      puts "\n#{player.number}: #{player.name}\n"
+    end  
+    seperate
+  end
+
+  def add_player(name, num)
+    #Create Player#object and push to @team array
+    @player = Player.new(name, num).tap{|player| @team.push(player)}  
+  end
+
+  def add_to_team(player)
+    @team.push(player)
+  end
+
+  def update_points
+    sum = 0
+    @team.each{|player| sum += player.points}
+    return sum
+  end
+
+  def points
+    @points = update_points()
+  end
+
+  def update_rebounds
+    sum = 0
+    @team.each{|player| sum += (player.offRebs + player.defRebs)}
+    return sum
+  end
+
+  def rebounds
+    @rebounds = update_rebounds()
+  end
+
+  def seperate
+    puts "----------------------------------"
+  end
+
+  def display
+    puts "\n\n"
+    seperate
+    @team.each do |player|
+      puts "#{player.number}: #{player.name}"
+    end
+    seperate
+    puts "\n\n"
+  end
+
+  def prompt
+    print "\n>>> "
+  end
+
+  def exit
+    puts "Are you sure? (Y/N)"
+    prompt()
+    action = gets.chomp()
+    if action.upcase == 'Y'
+      Process.exit(1)
+    end
+  end
+
+  def inspect
+    puts "-----"
+  end
+
+=begin
   def game_details
     loop do
       puts "\nAdd a Player to the Roster? (Y/N)"
@@ -30,45 +99,13 @@ class Game
       end
     end
   end
-
-  def add_player(name, num)
-    #Create Player#object and push to @team array
-    @player = Player.new(name, num).tap{|player| @team.push(player)}  
-  end
-
-  def add_to_team(player)
-    @team.push(player)
-  end
-
-  def display
-    puts "\n\n"
-    puts "----------------------------------"
-    @team.each do |player|
-      puts "#{player.number}: #{player.name}"
-    end
-    puts "----------------------------------"
-    puts "\n\n"
-  end
-
-  def prompt
-    print "\n>>> "
-  end
-
-  def exit
-    puts "Are you sure? (Y/N)"
-    prompt()
-    action = gets.chomp()
-    if action.upcase == 'Y'
-      Process.exit(1)
-    end
-  end
-
+=end
 end
 
 
 class Player
   
-  attr_accessor :name, :age, :height, :weight, :position, :number
+  attr_accessor :name, :age, :height, :weight, :position, :number, :points, :offRebs, :defRebs
 
   def initialize(name=nil, numb=nil)
     @name, @age, @height, @weight, @position, @number = name, 0, 0, 0, nil, numb
@@ -76,33 +113,33 @@ class Player
     @points, @ftAttempted, @ftMade, @twoAttempted, 
         @twoMade, @threeAttempted, @threeMade = 0,0,0,0,0,0,0,0,0
     #rebound variables
-    @offReb, @defReb = 0,0
+    @offRebs, @defRebs = 0,0
     #assist variable
-    @assist = 0
+    @assists = 0
     #turnover variable
-    @turnover = 0
+    @turnovers = 0
     #block variable
-    @block = 0
+    @blocks = 0
   end
 
   def block
-    @block += 1
+    @blocks += 1
   end
 
   def turn
-    @turnover += 1
+    @turnovers += 1
   end
 
   def asst
-    @assist += 1
+    @assists += 1
   end
 
   def oreb
-    @offReb += 1
+    @offRebs += 1
   end
 
   def dreb
-    @defReb += 1
+    @defRebs += 1
   end
 
   def ftmake
@@ -142,28 +179,28 @@ class Player
   def block_info
     puts "BLOCK STATISTICS"
     puts "----------------------------"
-    puts "Total Blocks:           #{@block}"
+    puts "Total Blocks:           #{@blocks}"
     puts "\n"
   end
 
   def turn_info
     puts "TURNOVER STATISTICS"
     puts "----------------------------"
-    puts "Turnovers:              #{@turnover}"
+    puts "Turnovers:              #{@turnovers}"
     puts "\n"
   end
 
   def asst_info
-    asst_turn = percent(@assist, @turnover)
+    asst_turn = percent(@assists, @turnovers)
     puts "ASSIST STATISTICS"
     puts "----------------------------"
-    puts "Total Assists:          #{@assist}"
+    puts "Total Assists:          #{@assists}"
     puts "Assist/Turnover:        #{asst_turn}"
     puts "\n"
   end
 
   def reb_info
-    tot_rebs = @defReb + @offReb
+    tot_rebs = @defRebs + @offRebs
     puts "REBOUND STATISTICS"
     puts "----------------------------"
     puts "Offensive Rebs:         #{@offReb}"
@@ -179,7 +216,7 @@ class Player
     two_perct = percent(@twoMade, @twoAttempted)
     three_perct = percent(@threeMade, @threeAttempted)
     fg_perct = percent(fg_made, fg_att)
-    puts "SHOOTING STATISTICS"
+    puts "\nSHOOTING STATISTICS"
     puts "----------------------------"
     puts "Points:                 #{@points}"
     puts "----------------------------"
@@ -224,4 +261,9 @@ class Player
     puts "\n\n"
   end
 
+  def inspect
+    puts "-----"
+  end
+
 end  #<-- END Player Class -->
+
