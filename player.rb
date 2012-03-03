@@ -112,7 +112,6 @@ class Game
     @threeMades = update_threeMades
   end
 
-
   def update_ftAtts
     sum = 0
     @team.each{|player| sum += player.ftAtt}
@@ -157,8 +156,6 @@ class Game
     @rebounds = update_offRebs + update_defRebs
   end
 
-
-
   def update
     points
     rebounds
@@ -183,11 +180,9 @@ class Game
     @team.each do |player|
       puts "\n\t\t#{player.number}: #{player.name}\n"
     end  
-    puts "\n"
     dashes
-    puts "\n"
+    puts "\n\n"
   end
-
 
   def display
     #update game instance variables
@@ -227,7 +222,6 @@ class Game
     puts "\n\t\tSCORE:                 #{@points}"
     puts "\n\n"
   end
-
 
   def dashes
     puts "\n\t\t------------------------------------"
