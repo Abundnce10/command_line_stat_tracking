@@ -10,17 +10,6 @@ class Game
         @blocks, @turnovers = 0, 0, 0, 0, 0, 0
   end
 
-  def team
-    puts "\n\n\t\t#{@teamname}"
-    dashes
-    @team.each do |player|
-      puts "\n\t\t#{player.number}: #{player.name}\n"
-    end  
-    puts "\n"
-    dashes
-    puts "\n"
-  end
-
   def add_player(name, num)
     #Create Player#object and push to @team array
     @player = Player.new(name, num).tap{|player| @team.push(player)}  
@@ -90,19 +79,54 @@ class Game
     @turnovers = update_turnovers
   end
 
-  def dashes
-    puts "\t\t----------------------------------"
+  def update
+    points
+    rebounds
+    assists
+    steals
+    blocks
+    turnovers
   end
 
-  def player_info
-    puts "\n\n"
-    puts "Number: Player Name"
+  def roster
+    puts "\n\n\t\t#{@teamname}"
     dashes
     @team.each do |player|
-      puts "\##{player.number}: #{player.name}"
-    end
+      puts "\n\t\t#{player.number}: #{player.name}\n"
+    end  
+    puts "\n"
+    dashes
+    puts "\n"
+  end
+
+
+  def display
+    #update game instance variables
+    update
+    puts "\n\n\t\t#{@teamname}"
+    dashes
+    puts "\t\tSCORE:              #{@points}"
+    dashes 
+    puts "\t\tSHOOTING"
+    dashes
+    puts "\t\tFIELD GOALS:        xx / xx"
+    puts "\t\tTHREE POINTERS:     xx / xx"
+    puts "\t\tFREE THROWS:        xx / xx"
+    puts "\n\t\tREBOUNDING"
+    dashes
+    puts "\t\tOffensive:          xx"
+    puts "\t\tDefensive:          xx"
+    puts "\n\t\tASSISTS:            #{@assists}"
+    puts "\n\t\tSTEALS:             #{@steals}"
+    puts "\n\t\tBLOCKS:             #{@blocks}"
+    puts "\n\t\tTURNOVERS:          #{@turnovers}"
     dashes
     puts "\n\n"
+  end
+
+
+  def dashes
+    puts "\t\t----------------------------------"
   end
 
   def prompt
